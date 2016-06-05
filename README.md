@@ -1,6 +1,6 @@
 ## react-updater-component
 
-Inspired by redux, a helper to create components whose state is managed by a built-in reducer. No more `this.setState`. In fact, no more `this`. All component state is stored in the `state` structure, which is managed by `reduce` (see [reducer documentation](http://redux.js.org/docs/basics/Reducers.html)).
+Inspired by [redux](https://github.com/reactjs/redux/), a helper to create components whose state is managed by a built-in reducer. No more `this.setState`. In fact, no more `this`. All component state is stored in the `state` structure, which is managed by `reduce` (see [reducer documentation](http://redux.js.org/docs/basics/Reducers.html)).
 
 [Examples](examples/):
 
@@ -49,7 +49,9 @@ const Clock = createComponent({
 		return <div>{timeStr}</div>;
 	},
 	/*
-	You can declare an initial state in your reducer. If you are not using es6 default parameters then your reducer should return the initial state whenever it receives `undefined` for `state`;
+	You can declare an initial state in your reducer. If you are
+	not using es6 default parameters then your reducer should return
+	the initial state whenever it receives `undefined` for `state`;
 	*/
 	reduce(state = clockInitialState, {type, payload}) {
 		switch(type) {
@@ -73,4 +75,4 @@ const Clock = createComponent({
 });
 ```
 
-If you need further documentation just read the source code. It's shorter than this README.
+If you need further documentation just read the [source code](index.es6.js). It's shorter than this README.

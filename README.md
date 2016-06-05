@@ -8,7 +8,7 @@ Inspired by [redux](https://github.com/reactjs/redux/), a helper to create compo
 import {createComponent} from '@download/react-updater-component';
 
 const Counter = createComponent({
-	render({state, update}) {
+	render({props, state, update}) {
 		return <div>
 			<button onClick={() => update('INCREMENT', 1)}>+1</button>
 			<button onClick={() => update('INCREMENT', 5)}>+5</button>
@@ -35,6 +35,7 @@ const clockInitialState = {
 	time: 0
 };
 const Clock = createComponent({
+	// Called after the component has mounted
 	onMount({update}) {
 		const interval = setInterval(refresh, 1000);
 		refresh();
@@ -69,10 +70,13 @@ const Clock = createComponent({
 				return state;
 		}
 	},
+	// Called before the component unmounts
 	onUnmount({state}) {
 		clearTimeout(state.interval);
 	}
 });
 ```
+
+There is also an `onPropsChange` notifier that works exactly like `onMount` and `onUnmount`.
 
 If you need further documentation just read the [source code](index.es6.js). It's shorter than this README.

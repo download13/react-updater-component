@@ -110,105 +110,46 @@ describe('Component', function () {
 		(0, _expect2.default)(wrapper.text()).to.be.equal('82');
 	});
 	it('is notified when mounted', function () {
-		var initialState = { mounted: false };
+		var mounted = false;
 		var Comp = (0, _index.createComponent)({
-			onMount: function onMount(_ref5) {
-				var update = _ref5.update;
-
-				update('MOUNT');
+			onMount: function onMount() {
+				mounted = true;
 			},
-			render: function render(_ref6) {
-				var state = _ref6.state;
-
-				return _react2.default.createElement(
-					'div',
-					null,
-					state.mounted
-				);
-			},
-			reduce: function reduce() {
-				var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
-				var _ref7 = arguments[1];
-				var type = _ref7.type;
-
-				if (type === 'MOUNT') {
-					return _extends({}, state, { mounted: true });
-				}
-				return state;
+			render: function render() {
+				return _react2.default.createElement('div', null);
 			}
 		});
 
-		var wrapper = (0, _enzyme.mount)(_react2.default.createElement(Comp, null));
-		wrapper.update();
-		(0, _expect2.default)(wrapper.text()).to.be.equal('true');
+		(0, _enzyme.mount)(_react2.default.createElement(Comp, null));
+		(0, _expect2.default)(mounted).to.be.ok();
 	});
 	it('is notified when unmounted', function () {
-		var initialState = { unounted: false };
+		var unmounted = false;
 		var Comp = (0, _index.createComponent)({
-			render: function render(_ref8) {
-				var state = _ref8.state;
-
-				return _react2.default.createElement(
-					'div',
-					null,
-					state.unmounted
-				);
+			render: function render() {
+				return _react2.default.createElement('div', null);
 			},
-			reduce: function reduce() {
-				var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
-				var _ref9 = arguments[1];
-				var type = _ref9.type;
-
-				if (type === 'UNMOUNT') {
-					return _extends({}, state, { unmounted: true });
-				}
-				return state;
-			},
-			onUnmount: function onUnmount(_ref10) {
-				var update = _ref10.update;
-
-				update('UNMOUNT');
+			onUnmount: function onUnmount() {
+				unmounted = true;
 			}
 		});
 
-		var wrapper = (0, _enzyme.shallow)(_react2.default.createElement(Comp, null));
-		wrapper.unmount();
-		(0, _expect2.default)(wrapper.text()).to.be.equal('true');
+		(0, _enzyme.shallow)(_react2.default.createElement(Comp, null)).unmount();
+		(0, _expect2.default)(unmounted).to.be.ok();
 	});
 	it('is notified when props change', function () {
-		var initialState = { changed: false };
+		var changed = false;
 		var Comp = (0, _index.createComponent)({
-			onPropsChange: function onPropsChange(_ref11) {
-				var props = _ref11.props;
-				var update = _ref11.update;
-
-				console.log('props changed', props);
-				update('CHANGE', props.ch);
+			onPropsChange: function onPropsChange() {
+				changed = true;
 			},
-			render: function render(_ref12) {
-				var state = _ref12.state;
-				var props = _ref12.props;
-
-				return _react2.default.createElement(
-					'div',
-					null,
-					state.changed,
-					props.ch
-				);
-			},
-			reduce: function reduce() {
-				var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
-				var _ref13 = arguments[1];
-				var type = _ref13.type;
-				var payload = _ref13.payload;
-
-				if (type === 'CHANGE') {
-					return _extends({}, state, { change: payload });
-				}
-				return state;
+			render: function render() {
+				return _react2.default.createElement('div', null);
 			}
 		});
 
-		(0, _expect2.default)((0, _enzyme.shallow)(_react2.default.createElement(Comp, null)).setProps({ ch: true }).text()).to.be.equal('truetrue');
+		(0, _expect2.default)(changed).to.not.be.ok();
+		(0, _enzyme.shallow)(_react2.default.createElement(Comp, null)).setProps({ ch: true });
+		(0, _expect2.default)(changed).to.be.ok();
 	});
 });

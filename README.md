@@ -1,4 +1,6 @@
-## react-updater-component
+# react-updater-component
+
+[![Build Status](https://travis-ci.org/download13/react-updater-component.svg?branch=master)](https://travis-ci.org/download13/react-updater-component)
 
 Inspired by [redux](https://github.com/reactjs/redux/), a helper to create components whose state is managed by a built-in reducer. No more `this.setState`. In fact, no more `this`. All component state is stored in the `state` structure, which is managed by `reduce` (see [reducer documentation](http://redux.js.org/docs/basics/Reducers.html)).
 

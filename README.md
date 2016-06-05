@@ -6,6 +6,8 @@ Inspired by [redux](https://github.com/reactjs/redux/), a helper to create compo
 
 [Examples](examples/):
 
+A simple component that manages it's own state.
+
 ```javascript
 import {createComponent} from '@download/react-updater-component';
 
@@ -30,6 +32,8 @@ const Counter = createComponent({
 
 ReactDOM.render(<Counter />, document.getElementById('root'));
 ```
+
+A component that needs to get lifecycle notifications.
 
 ```javascript
 const clockInitialState = {

@@ -65,65 +65,46 @@ describe('Component', () => {
 		expect(wrapper.text()).to.be.equal('82');
 	});
 	it('is notified when mounted', () => {
-		const initialState = {mounted: false};
+		let mounted = false;
 		const Comp = createComponent({
-			onMount({update}) {
-				update('MOUNT');
+			onMount() {
+				mounted = true;
 			},
-			render({state}) {
-				return <div>{state.mounted}</div>;
-			},
-			reduce(state = initialState, {type}) {
-				if(type === 'MOUNT') {
-					return {...state, mounted: true};
-				}
-				return state;
+			render() {
+				return <div/>;
 			}
 		});
 
-		const wrapper = mount(<Comp />);
-		wrapper.update();
-		expect(wrapper.text()).to.be.equal('true');
+		mount(<Comp />);
+		expect(mounted).to.be.ok();
 	});
 	it('is notified when unmounted', () => {
-		const initialState = {unounted: false};
+		let unmounted = false;
 		const Comp = createComponent({
-			render({state}) {
-				return <div>{state.unmounted}</div>;
+			render() {
+				return <div/>;
 			},
-			reduce(state = initialState, {type}) {
-				if(type === 'UNMOUNT') {
-					return {...state, unmounted: true};
-				}
-				return state;
-			},
-			onUnmount({update}) {
-				update('UNMOUNT');
+			onUnmount() {
+				unmounted = true;
 			}
 		});
 
-		const wrapper = shallow(<Comp />);
-		wrapper.unmount();
-		expect(wrapper.text()).to.be.equal('true');
+		shallow(<Comp />).unmount();
+		expect(unmounted).to.be.ok();
 	});
 	it('is notified when props change', () => {
-		const initialState = {changed: false};
+		let changed = false;
 		const Comp = createComponent({
-			onPropsChange({props, update}) {
-				console.log('props changed', props)
-				update('CHANGE', props.ch);
+			onPropsChange() {
+				changed = true;
 			},
-			render({state, props}) {
-				return <div>{state.changed}{props.ch}</div>;
-			},
-			reduce(state = initialState, {type, payload}) {
-				if(type === 'CHANGE') {
-					return {...state, change: payload};
-				}
-				return state;
+			render() {
+				return <div/>;
 			}
 		});
 
-		expect(shallow(<Comp />).setProps({ch: true}).text()).to.be.equal('truetrue');
+		expect(changed).to.not.be.ok();
+		shallow(<Comp />).setProps({ch: true});
+		expect(changed).to.be.ok();
 	});
 });
